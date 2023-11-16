@@ -50,9 +50,10 @@ public class MainActivity extends AppCompatActivity {
                         }
                         else {   //break 모드
                             if(!btn.isFlag()) {
-                                if(!breakBlock(btn)) {
-                                    GaveOver(btn, false);
-                                }
+                                if(!breakBlock(btn))
+                                    GameOver(btn, false);
+                                else if(btn.getBlocks() == 0)
+                                    GameOver(btn, true);
                             }
                         }
                     }
@@ -67,25 +68,19 @@ public class MainActivity extends AppCompatActivity {
 
         int x = button.get_X();
         int y = button.get_Y();
-        blockSearch(buttons[x][y]);
         System.out.println("메소드 실행됨!" + button.get_X() + button.get_Y());
-        if(button.isFlag()) {
-            button.toggleFlag();
-            TextView remainMines = (TextView) findViewById(R.id.remainMines);
-            remainMines.setText("" + button.getFlags());
-        }
-
-        if(!button.isClickable()) {
-            System.out.println("if button is not Clickable");
-        }
-        else if (button.breakBlock()) {
-            System.out.println("지뢰 탐지!");
-            return false;
-            //GaveOver(button, false);
-        }
-        else {
-            System.out.println("블록 개수1 :" + (button.getBlocks() + button.getFlags()));
-            if(button.getIsNeighborMines() == 0){
+        if(button.isClickable()) {
+            if(button.isFlag()) {
+                button.toggleFlag();
+                TextView remainMines = (TextView) findViewById(R.id.remainMines);
+                remainMines.setText("" + button.getFlags());
+            }
+            else if (button.breakBlock()) {
+                System.out.println("지뢰 탐지!");
+                return false;
+                //GaveOver(button, false);
+            }
+            else if(button.getIsNeighborMines() == 0){
                 System.out.println("else none mine");
                 for(int i = -1; i <= 1; i++) {
                     for(int j = -1; j <= 1; j++) {
@@ -94,13 +89,9 @@ public class MainActivity extends AppCompatActivity {
                         if(i == 0 && j == 0)
                             continue;
                         else if((row >= 0 && row < 9) && (col >= 0 && col < 9))
-                            breakBlock(button);
+                            breakBlock(buttons[row][col]);
                     }
                 }
-            }
-            if(button.getBlocks() == 0) {
-                System.out.println("게임 클리어!");
-                GaveOver(button, true);
             }
         }
         return true;
@@ -117,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
             } while (mine[x][y]); // 이미 선택한 인덱스일 경우 다시 선택
             mine[x][y] = true;
             button[x][y].setMine(true);
-            //button[x][y].setText("ㅈ"); //지뢰 위치 확인
+            button[x][y].setText("ㅈ"); //지뢰 위치 확인
         }
     }
 
@@ -143,46 +134,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void blockSearch(BlockButton button) {
-        int x = button.get_X();
-        int y = button.get_Y();
-        System.out.println("메소드 실행됨!" + x + y);
-        if(button.isFlag()) {
-            button.toggleFlag();
-            TextView remainMines = (TextView) findViewById(R.id.remainMines);
-            remainMines.setText("" + button.getFlags());
-        }
-
-        if(!button.isClickable()) {
-            System.out.println("if button is not Clickable");
-        }
-        else if (button.breakBlock()) {
-            System.out.println("지뢰 탐지!");
-            GaveOver(button, false);
-        }
-        else {
-            System.out.println("블록 개수1 :" + (button.getBlocks() + button.getFlags()));
-            if(button.getIsNeighborMines() == 0){
-                System.out.println("else none mine");
-                for(int i = -1; i <= 1; i++) {
-                    for(int j = -1; j <= 1; j++) {
-                        int row = x + i;
-                        int col = y + j;
-                        if(i == 0 && j == 0)
-                            continue;
-                        else if((row >= 0 && row < 9) && (col >= 0 && col < 9))
-                            blockSearch(buttons[row][col]);
-                    }
-                }
-            }
-            if(button.getBlocks() == 0) {
-                System.out.println("게임 클리어!");
-                GaveOver(button, true);
-            }
-        }
-    }
-
-    public void GaveOver(BlockButton button, boolean win) {
+    public void GameOver(BlockButton button, boolean win) {
         if(win) {
             Toast.makeText(MainActivity.this, "you win!", Toast.LENGTH_SHORT).show();
         }

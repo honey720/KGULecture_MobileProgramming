@@ -72,18 +72,17 @@ class BlockButton extends Button {
         this.flag = !flag;
     }
     public boolean breakBlock() {
-        this.setClickable(false);
         this.blocks -= 1;
         if (mine) {
-            setText("*");
             return true;
         }
         else {
+            this.setClickable(false);
+            setBackgroundColor(Color.WHITE);
             if(isNeighborMines == 0)
                 setText("");
             else
                 setText("" + isNeighborMines);
-            setBackgroundColor(Color.WHITE);
             return false;
         }
     }
