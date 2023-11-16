@@ -69,13 +69,14 @@ public class MainActivity extends AppCompatActivity {
         int x = button.get_X();
         int y = button.get_Y();
         System.out.println("메소드 실행됨!" + button.get_X() + button.get_Y());
-        if(button.isClickable()) {
-            if(button.isFlag()) {
-                button.toggleFlag();
-                TextView remainMines = (TextView) findViewById(R.id.remainMines);
-                remainMines.setText("" + button.getFlags());
-            }
-            else if (button.breakBlock()) {
+
+        if(button.isFlag()) {
+            button.toggleFlag();
+            TextView remainMines = (TextView) findViewById(R.id.remainMines);
+            remainMines.setText("" + button.getFlags());
+        }
+        else if(button.isClickable()) {
+            if (button.breakBlock()) {
                 System.out.println("지뢰 탐지!");
                 return false;
                 //GaveOver(button, false);
