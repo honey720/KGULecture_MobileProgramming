@@ -68,21 +68,22 @@ public class MainActivity extends AppCompatActivity {
 
         int x = button.get_X();
         int y = button.get_Y();
-        System.out.println("메소드 실행됨!" + button.get_X() + button.get_Y());
+        //System.out.println("메소드 실행됨!" + button.get_X() + button.get_Y());
 
         if(button.isFlag()) {
             button.toggleFlag();
             TextView remainMines = (TextView) findViewById(R.id.remainMines);
             remainMines.setText("" + button.getFlags());
         }
-        else if(button.isClickable()) {
+
+        if(button.isClickable()) {
             if (button.breakBlock()) {
-                System.out.println("지뢰 탐지!");
+                //System.out.println("지뢰 탐지!");
                 return false;
                 //GaveOver(button, false);
             }
             else if(button.getIsNeighborMines() == 0){
-                System.out.println("else none mine");
+                //System.out.println("else none mine");
                 for(int i = -1; i <= 1; i++) {
                     for(int j = -1; j <= 1; j++) {
                         int row = x + i;
@@ -95,6 +96,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
+
+        System.out.println(button.getBlocks());
         return true;
     }
 
