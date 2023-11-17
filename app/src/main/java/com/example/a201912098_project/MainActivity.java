@@ -96,8 +96,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
-
-        System.out.println(button.getBlocks());
+        //System.out.println(button.getBlocks()); //남은 블록 개수 확인
         return true;
     }
 
@@ -112,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
             } while (mine[x][y]); // 이미 선택한 인덱스일 경우 다시 선택
             mine[x][y] = true;
             button[x][y].setMine(true);
-            button[x][y].setText("ㅈ"); //지뢰 위치 확인
+            //button[x][y].setText("ㅈ"); //지뢰 위치 확인
         }
     }
 
@@ -148,9 +147,12 @@ public class MainActivity extends AppCompatActivity {
                 for(int j = 0; j < 9; j++) {
                     if(buttons[i][j].isMine())
                         buttons[i][j].setText("*");
-                    buttons[i][j].setClickable(false);
                 }
             }
+        }
+        for(int i = 0; i < 9; i++) {
+            for(int j = 0; j < 9; j++)
+                buttons[i][j].setClickable(false);
         }
     }
 
