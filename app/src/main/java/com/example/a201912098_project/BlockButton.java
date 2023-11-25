@@ -3,7 +3,6 @@ package com.example.a201912098_project;
 import android.content.Context;
 import android.graphics.Color;
 import android.widget.Button;
-import android.widget.TextView;
 
 class BlockButton extends Button {
     public BlockButton(Context context, int x, int y){
@@ -22,7 +21,7 @@ class BlockButton extends Button {
     private boolean flag;
     private int isNeighborMines;
     private static int flags = 10;
-    private static int blocks =- flags;
+    private static int blocks = -flags;
 
     public int get_X() {
         return this.x;
